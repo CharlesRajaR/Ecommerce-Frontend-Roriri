@@ -1,12 +1,11 @@
 import { BrowserRouter } from "react-router-dom";
-import CustomerApp from "./CustomerComponent/CustomerApp";
-import StoreApp from "./StoreComponent/StoreApp";
+import Router from "./Router/Router";
 
 function App() {
   return (
     <div >
       <BrowserRouter>
-      <StoreApp/>
+      <Router/>
       </BrowserRouter>
     </div>
   );

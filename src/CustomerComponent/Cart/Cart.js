@@ -1,24 +1,27 @@
 import React from 'react'
 import CartItems from './CartItems'
 import AddressCard from './AddressCard'
+import { useSelector } from 'react-redux'
 
 const Cart = () => {
+  const { userCart } = useSelector(store => store)
+
+  console.log(userCart)
   return (
     <>
      <div className="w-[100vw] bg-slate-200 flex flex-col">
       <div className="flex flex-col md:flex-row justify-between">
-        <div className="w-[30vw] flex flex-col">
+        <div className=" w-full md:w-[30vw] flex flex-col mr-2">
            {
-            [1,1,1,1,1].map(()=>{
-               return <CartItems/>
+            userCart?.cartItems?.map((item, i)=>{
+               return <CartItems key={i} item={item} />
             })
            }
         </div>
         <div className="border-l-2 border-green-300 px-3 py-3 m-1 w-[70vw] grid  grid-cols-1 md:grid-cols-3 gap-y-3 gap-3">
           {
-              [1,1,1,1,1].map(()=>{
-                return <AddressCard/>
-              })
+              [1,1,1,1,1].map(() => {return <AddressCard/>}
+              )
           }
         </div>
       </div>

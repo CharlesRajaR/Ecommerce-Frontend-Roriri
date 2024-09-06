@@ -1,6 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../State/Authentication/Action';
+import { useNavigate } from 'react-router-dom';
 
 const LoginModal = ({isVisible, onClose}) => {
+    const initialValues = {
+        "email":"",
+        "password":""
+    } 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState(initialValues);
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        dispatch(loginUser({userData:formData, navigate}))
+        console.log(formData)
+    } 
+
+    const handleChange = (e) =>{
+        setFormData({...formData,[e.target.name]:e.target.value})
+    }
     if(!isVisible){
         return <></>
     }
@@ -12,19 +32,19 @@ const LoginModal = ({isVisible, onClose}) => {
                 X
             </button>
             <div className='bg-white'>
-             <form className='bg-slate-50 shadow-green-300 rounded px-8 pt-6 pb-8 mb-4' action="">
+             <form onSubmit={handleSubmit} className='bg-slate-50 shadow-green-300 rounded px-8 pt-6 pb-8 mb-4' action="">
             <div className="mb-4">
                
-                <input className='shadow border mb-3
+                <input onChange={handleChange} className='shadow border mb-3
                  rounded w-full py-2 px-3 text-gray-700 focus:outline-transparent'
-                  type="text" id='email' placeholder='Email'/>
+                  type="text" id='email' placeholder='Email' name="email" value={formData.email}/>
                 
-                  <input className='shadow border
+                  <input onChange={handleChange} className='shadow border
                  rounded w-full py-2 px-3 text-gray-700 focus:outline-transparent'
-                  type="text" id='password' placeholder='Password'/>
+                  type="text" id='password' placeholder='Password' name="password" value={formData.password}/>
             </div>
             <div>
-                <button onClick={()=>onClose()} className='bg-blue-500 text-white hover:bg-blue-600
+                <button type='submit' className='bg-blue-500 text-white hover:bg-blue-600
                 rounded-lg font-semibold text-xl px-4 py-2 mb-2'>Login {"->"} </button>
             </div>
      
