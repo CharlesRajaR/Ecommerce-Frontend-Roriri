@@ -29,7 +29,7 @@ const StoreApp = () => {
 
       return(
         <>
-        {store?.store!==null?<>
+        {store?.store !== "" || null || undefined ?<>
         <Snavbar/>
         <Routes>
         <Route path='/' element={<Shome storeId={store?.store?.id}/>}/>

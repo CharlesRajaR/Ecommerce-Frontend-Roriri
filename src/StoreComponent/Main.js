@@ -7,6 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createStore } from '../State/store/Action';
 
 const Main = () => {
+    const [isCreating, setIsCreating] = useState(false);
+
+  const handleClick = () => {
+    setIsCreating(true);
+    setTimeout(() => {
+      setIsCreating(false);
+    }, 7000); // Simulate a 3-second process
+  };
 
     const { store } = useSelector(store => store)
 
@@ -105,9 +113,11 @@ const Main = () => {
                 </div>
 
                 <div className="mx-5">
-                    <button className='bg-pink-500 rounded-lg hover:bg-pink-600 text-white text-2xl font-semibold
-        px-5 py-3' type='submit'>
-            Create Store {' -> '}
+                  
+                    <button disabled={isCreating} className={` ${isCreating ? ' cursor-not-allowed' : ''} bg-pink-500 text-white px-3 py-1 rounded-lg text-2xl font-semibold`} type='submit' onClick={handleClick}>
+      <span>{isCreating ? 'Creating...' : 'Create Store ->'}</span>
+      
+    
                     </button>
                  </div>
             </form>

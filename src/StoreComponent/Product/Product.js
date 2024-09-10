@@ -46,13 +46,13 @@ const Product = ({item}) => {
     dispatch(addToFav({jwt, fav:data}))
   }
   return (
-    <div className='h-[40vh] mb-3  bg-gray-200 flex flex-col justify-between'>
-      <div className="flex justify-center items-center">
+    <div className='h-full  mb-3  flex flex-col bg-blue-100 justify-between'>
+      <div className="flex md:h-[30vh] justify-center bg-blue-50  items-center">
         <div className="">
-            <img src={item?.images[0]} alt="" />
+            <img src={item?.images[0]} alt=""  className='object-cover w-3/4 h-3/4 md:w-full md:h-full'/>
         </div>
       </div>
-      <div className="h-1/4 flex justify-between bg-white">
+      <div className="h-full md:h-[20vh] flex justify-between ">
       <div className="flex flex-col">
          <div className="text-2xl font-bold text-gray-500">{item?.name}</div>
          <div className="text-2xl font-semibold text-gray-500">{`Price:${item?.price}`}</div>
@@ -60,7 +60,7 @@ const Product = ({item}) => {
       </div>
       <div className="flex flex-col">
         <div className="">{
-          infav(item?.id)?
+          !infav(item?.id)?
           <IconButton  onClick={()=>addToFavHandle()}>
           <FavoriteBorderOutlined/>
         </IconButton>:

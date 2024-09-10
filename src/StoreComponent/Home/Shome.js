@@ -19,7 +19,7 @@ const Shome = ({storeId}) => {
   return (
     <div>
       <Banner store={store}/>
-      <div className='px-3 py-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 bg-white'>
+      <div className='px-3 py-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 '>
         {
             storeProduct?.storeProducts?.map((item) =>{
                 return <Product item={item}/>

@@ -7,6 +7,11 @@ import { createProduct } from '../../State/StoreProduct/Action';
 import { useNavigate } from 'react-router-dom';
 
 const CreateProduct = () => {
+  const [create, setCreate ] = useState(false)
+  const handleCreate = () =>{
+    setCreate(true)
+    setTimeout(()=>setCreate(false), 7000)
+  }
 
   const { store } = useSelector(store => store)
   const images = [];
@@ -97,7 +102,8 @@ const CreateProduct = () => {
                    <input className="mb-2 shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="price" type="number" placeholder="Price" name='price' value={formData.price}
                   onChange={handleChange}/>
-                  <button type='submit' className='px-4 py-2 text-center text-2xl font-semibold text-white bg-yellow-400 hover:bg-yellow-500 rounded-lg'>Create</button>
+                  <button type='submit' className='px-4 py-2 text-center text-2xl font-semibold text-white bg-yellow-400
+                   hover:bg-yellow-500 rounded-lg' onClick={handleCreate}>{create?'Creating...':'Create'}</button>
             </form>
         </div>
     </div>

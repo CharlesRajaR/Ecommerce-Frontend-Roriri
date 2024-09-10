@@ -55,6 +55,7 @@ const Cart = () => {
         <div className="flex flex-col">
           <h1 className='text-3xl font-bold py-5'>Total items: {userCart?.cartItems?.length}</h1>
           <h1 className='text-3xl font-bold py-5'>Total Price: {totalPrice()}</h1>
+          <h1 className='text-xl font-bold text-blue-700'>select address before buying</h1>
           <button className='text-3xl font-semibold py-2 px-4 bg-yellow-500
            hover:bg-yellow-600 rounded-lg mb-3 text-white'
            onClick={()=>cartOrder()}>Buy</button>

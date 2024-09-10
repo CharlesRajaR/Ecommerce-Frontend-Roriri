@@ -12,7 +12,9 @@ export const registerUser = (data) => async(dispatch) => {
     try{
         console.log("reqdata",data.userData)
         const  response  = await axios.post(`${API_URL}/auth/signup`, data.userData)
-        data.navigate('/loginorreg')
+        setTimeout(()=>data.navigate('/reg/success'),500)
+        setTimeout(()=>data.navigate('/loginorreg'),1000)
+        
         dispatch({type:REGISTER_USER_SUCCESS, payload:response?.data })
         console.log("register user successfull",response?.data)
     }
@@ -82,10 +84,10 @@ export const getUserByJwtToken = (req) =>{
 }
 
 
-export const uploadUserProfile = ({jwt, image}) => async(dispatch) => {
+export const uploadUserProfile = ({jwt, req}) => async(dispatch) => {
     dispatch({type:UPLOAD_USER_PROFILE_REQUEST})
     try{
-        const response =await api.put(`/api/upload/profile`,image,{
+        const response =await api.put(`/api/upload/profile`,req,{
             headers:{
                 Authorization:`Bearer ${jwt}`
             }

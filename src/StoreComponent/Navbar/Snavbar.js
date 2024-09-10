@@ -15,7 +15,7 @@ const Snavbar = () => {
   }
   return (
     <>
-    <div className='z-10 flex flex-col'>
+    <div className='z-10 w-full flex flex-col'>
     <div className='w-full  flex justify-between px-5 py-3 bg-white'>
     <div className="flex justify-start">
       <div onClick={()=>navigate('/store/profile')}  className="cursor-pointer px-3 text-gray-600"><AccountCircle/></div>
@@ -32,7 +32,7 @@ const Snavbar = () => {
     </div>
     </div>
 
-    <div className="w-full bg-gray-200 flex justify-center items-center py-3">
+    <div className="w-screen bg-gray-200 flex justify-center items-center py-3">
       <div onClick={() => navigate('/store')} className="cursor-pointer text-2xl px-5 font-semibold">Home</div>
       <div onClick={() => navigate('/store/order')} className="cursor-pointer text-2xl px-5 font-semibold">Orders</div>
       <div onClick={() => navigate('/store/create/product')} className=" cursor-pointer text-2xl px-5 font-semibold">Add new product {'->'}</div>

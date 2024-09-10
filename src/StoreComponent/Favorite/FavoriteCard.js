@@ -15,15 +15,15 @@ const FavoriteCard = ({item}) => {
     <div className='bg-blue-100 h-[30vh] relative flex justify-center items-center'>
         <img className='absolute h-3/4 object-cover' src={item?.images[0]} alt="" />
     </div>
-    <div className="text-xl flrx justify-center items-center text-gray-600 font-semibold text-center">
+    <div className="text-xl flex justify-center items-center text-gray-600 font-semibold text-center">
      <div className="">
         {item?.title}
      </div>
-        <div className="">
+      <div className="">
           <IconButton onClick={()=>removeFavHandle()}>
-            <Delete/> 
+            <Delete sx={{color:'red'}}/> 
           </IconButton>
-        </div>
+    </div>
     </div>
     <div className='text-2xl text-gray-500 font-bold text-center'>
         {item?.description}
