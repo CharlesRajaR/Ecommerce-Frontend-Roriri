@@ -1,7 +1,7 @@
 import { api } from "../config/api";
-import { CREATE_CART_ORDER_FAILURE, CREATE_CART_ORDER_REQUEST, CREATE_CART_ORDER_SUCCESS, CREATE_SINGLE_ORDER_FAILURE, CREATE_SINGLE_ORDER_REQUEST, CREATE_SINGLE_ORDER_SUCCESS, DELETE_ORDER_FAILURE, DELETE_ORDER_REQUEST, GET_USER_ORDER_FAILURE, GET_USER_ORDER_REQUEST } from "./ActionType";
+import { CREATE_CART_ORDER_FAILURE, CREATE_CART_ORDER_REQUEST, CREATE_CART_ORDER_SUCCESS, CREATE_SINGLE_ORDER_FAILURE, CREATE_SINGLE_ORDER_REQUEST, CREATE_SINGLE_ORDER_SUCCESS, DELETE_ORDER_FAILURE, DELETE_ORDER_REQUEST, DELETE_ORDER_SUCCESS, GET_ITEM_ORDER_FAILURE, GET_ITEM_ORDER_REQUEST, GET_ITEM_ORDER_SUCCESS, GET_USER_ORDER_FAILURE, GET_USER_ORDER_REQUEST, GET_USER_ORDER_SUCCESS } from "./ActionType";
 
-export const createSingleOrder = ({jwt, req}) =>{
+export const createSingleOrder = ({jwt, req, navigate}) =>{
     return async(dispatch) =>{
 
         dispatch({type:CREATE_SINGLE_ORDER_REQUEST})
@@ -15,6 +15,7 @@ export const createSingleOrder = ({jwt, req}) =>{
         });
 
         dispatch({type:CREATE_SINGLE_ORDER_SUCCESS, payload:response.data})
+        navigate('/orders')
         console.log("create single order success", response.data)
         }
         catch(error){
@@ -24,7 +25,7 @@ export const createSingleOrder = ({jwt, req}) =>{
     }
 }
 
-export const createCartOrder = ({jwt, address}) =>{
+export const createCartOrder = ({jwt, address, navigate}) =>{
     return async(dispatch) =>{
 
         dispatch({type:CREATE_CART_ORDER_REQUEST})
@@ -36,6 +37,7 @@ export const createCartOrder = ({jwt, address}) =>{
             }
         });
         dispatch({type:CREATE_CART_ORDER_SUCCESS, payload:response.data})
+        navigate('/orders')
         console.log("create cart order successfully", response.data)
     }
     catch(error){
@@ -45,7 +47,7 @@ export const createCartOrder = ({jwt, address}) =>{
     }
 }
 
-export const getUserOrder = ({jwt}) =>{
+export const getUserOrder = (jwt) =>{
     return async(dispatch) =>{
 
         dispatch({type:GET_USER_ORDER_REQUEST})
@@ -62,6 +64,23 @@ export const getUserOrder = ({jwt}) =>{
         dispatch({type:GET_USER_ORDER_FAILURE, payload:error})
         console.log("get user order failure")
     }
+    }
+}
+
+export const getItemOfOrder = ({jwt, id}) => async(dispatch) =>{
+    dispatch({type:GET_ITEM_ORDER_REQUEST})
+    try{
+        const response =await api.get(`/api/order/items/${id}`,{
+            headers:{
+                Authorization:`Bearer ${jwt}`
+            }
+        });
+        dispatch({type:GET_ITEM_ORDER_SUCCESS, payload:response.data})
+        console.log("get item of order successfully", response.data)
+    }
+    catch(error){
+        dispatch({type:GET_ITEM_ORDER_FAILURE, payload:error})
+        console.log("get item of order failure")
     }
 }
 

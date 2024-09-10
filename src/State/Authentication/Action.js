@@ -1,5 +1,9 @@
 import axios from "axios"
-import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from "./ActionType"
+import { ADD_TO_FAVORITES_FAILURE, ADD_TO_FAVORITES_REQUEST, ADD_TO_FAVORITES_SUCCESS,
+     GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST,
+      LOGIN_USER_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_USER_FAILURE,
+       REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REMOVE_TO_FAVORITES_FAILURE,
+        REMOVE_TO_FAVORITES_REQUEST, REMOVE_TO_FAVORITES_SUCCESS, UPLOAD_USER_PROFILE_FAILURE, UPLOAD_USER_PROFILE_REQUEST, UPLOAD_USER_PROFILE_SUCCESS } from "./ActionType"
 import { api, API_URL } from "../config/api"
 
 
@@ -46,23 +50,107 @@ export const loginUser = (data) => async(dispatch) => {
     }
 }
 
-export const getUserByJwtToken = (jwt) =>{
+export const getUserByJwtToken = (req) =>{
     return async(dispatch) =>{
         dispatch({type:GET_USER_REQUEST})
         try{
-            const { response } = api.get('/user/jwt',{
+            const  response =await api.get('/api/user/jwt',{
                 headers:{
-                    Authorization:`Bearer ${jwt}`
+                    Authorization:`Bearer ${req.jwt}`
                 }
             });
+            if(response?.data?.role === "ROLE_STORE_OWNER"){
+                req.navigate('/store')
+            }
+            else if(response?.data?.role === "ROLE_CUSTOMER"){
+                req.navigate('/')
+            }
+            else{
+                req.navigate('/admin')
+            }
 
-            dispatch({type:GET_USER_SUCCESS, payload:response})
-            console.log("get user successfull",response);
+            dispatch({type:GET_USER_SUCCESS, payload:response.data})
+            console.log("get user successfull",response.data);
         }
 
         catch(error){
             dispatch({type:GET_USER_FAILURE, payload:error})
+            req.navigate('/loginorreg')
             console.log("get user failure");
         }
+    }
+}
+
+
+export const uploadUserProfile = ({jwt, image}) => async(dispatch) => {
+    dispatch({type:UPLOAD_USER_PROFILE_REQUEST})
+    try{
+        const response =await api.put(`/api/upload/profile`,image,{
+            headers:{
+                Authorization:`Bearer ${jwt}`
+            }
+        });
+        dispatch({type:UPLOAD_USER_PROFILE_SUCCESS, payload:response.data})
+        console.log("upload profile success", response.data)
+    }
+    catch(error){
+        dispatch({type:UPLOAD_USER_PROFILE_FAILURE, payload:error})
+        console.log("upload profile failure")
+    }
+}
+
+export const logout = (navigate) => async(dispatch) =>{
+    dispatch({type:LOGOUT_REQUEST})
+
+    try{
+     localStorage.clear();
+    dispatch({type:LOGOUT_SUCCESS})
+    console.log("logout successfull")
+    setTimeout(()=>navigate('/logout'),1000)
+    setTimeout(()=>navigate('/loginorreg'),5000)
+    
+    
+    }
+
+    catch(error){
+        dispatch({type:LOGOUT_FAILURE})
+        console.log("error",error)
+    }
+}
+
+
+export const addToFav = ({jwt, fav}) => async(dispatch) => {
+    dispatch({type:ADD_TO_FAVORITES_REQUEST})
+    try{
+        const response = await api.put("api/add-to-fav", fav ,{
+            headers:{
+                Authorization:`Bearer ${jwt}`
+            },
+        });
+
+        dispatch({type:ADD_TO_FAVORITES_SUCCESS, payload:response.data})
+        console.log("add to favorites success", response.data)
+    }
+    catch(error){
+        dispatch({type:ADD_TO_FAVORITES_FAILURE, payload:error})
+        console.log("Add to favorites failure", error)
+    }
+}
+
+export const removeToFav = ({jwt, fav}) => async(dispatch) => {
+    dispatch({type:REMOVE_TO_FAVORITES_REQUEST})
+    try{
+        const response =await api.put("/api/remove-to-fav",  fav , {
+            headers:{
+                Authorization:`Bearer ${jwt}`
+            }
+        });
+
+        dispatch({type:REMOVE_TO_FAVORITES_SUCCESS, payload:response.data})
+        console.log("remove to fav success", response.data)
+    }
+    catch(error){
+        dispatch({type:REMOVE_TO_FAVORITES_FAILURE, payload:error})
+        console.log("remove to fav failure")
     }
 }

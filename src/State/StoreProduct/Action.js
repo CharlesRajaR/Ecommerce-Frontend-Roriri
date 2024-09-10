@@ -2,7 +2,7 @@ import { api } from "../config/api"
 import { CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAILURE, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, GET_STORE_PRODUCT_FAILURE, GET_STORE_PRODUCT_REQUEST, GET_STORE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAILURE, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS } from "./ActionType"
 
 
-export const createProduct = ({jwt, productReq}) => async(dispatch) => {
+export const createProduct = ({navigate, jwt, productReq}) => async(dispatch) => {
     dispatch({type:CREATE_PRODUCT_REQUEST})
 
     try{
@@ -13,6 +13,7 @@ export const createProduct = ({jwt, productReq}) => async(dispatch) => {
         });
 
         dispatch({type:CREATE_PRODUCT_SUCCESS, payload:response.data})
+        navigate('/store')
         console.log("create product success", response.data)
     }
     catch(error){

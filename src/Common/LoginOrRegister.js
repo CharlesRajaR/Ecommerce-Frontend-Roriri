@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
-import RegisterModalStore from './RegisterModalStore';
+import LoginModal from '../CustomerComponent/Navbar/LoginModal';
+import RegisterModal from '../CustomerComponent/Navbar/RegisterModal';
+import RegisterModalStore from '../CustomerComponent/Navbar/RegisterModalStore';
 
 const LoginOrRegister = () => {
   const[showLoginModal, setShowLoginModal] = useState(false);

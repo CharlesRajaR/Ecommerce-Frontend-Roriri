@@ -11,7 +11,7 @@ const Snavbar = () => {
   const dispatch = useDispatch();
 
   const logoutHandle = () => {
-   
+    dispatch(logout(navigate))
   }
   return (
     <>
@@ -20,7 +20,7 @@ const Snavbar = () => {
     <div className="flex justify-start">
       <div onClick={()=>navigate('/store/profile')}  className="cursor-pointer px-3 text-gray-600"><AccountCircle/></div>
       <div onClick={()=>navigate('/store/favorite')} className="cursor-pointer px-3 text-gray-600"><Favorite/></div>
-      <div onClick={()=>logoutHandle} className="cursor-pointer px-3 text-gray-600"><Logout/></div>
+      <div onClick={()=>logoutHandle()} className="cursor-pointer px-3 text-gray-600"><Logout/></div>
     </div>
     <div className="">
       <div className='text-3xl font-bold '>

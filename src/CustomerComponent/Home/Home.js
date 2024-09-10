@@ -4,6 +4,7 @@ import ProductDetails from './ProductDetails';
 import img from '../../assets/ecom.webp'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../../State/Product/Action';
+import { getUserOrder } from '../../State/Order/Action';
 
 const Home = () => {
   const jwt = localStorage.getItem("jwt")
@@ -25,7 +26,6 @@ const Home = () => {
               Shop Outside the Box
             </div>
             <div className="text-3xl font-bold text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, iure!
             </div>
          </div>
       </div>
@@ -33,10 +33,10 @@ const Home = () => {
                 Top Products for you
       </div>
     {
-        userProduct.products?.map((item)=>{
+        userProduct.products?.map((item, i)=>{
             return (<div className='gap-3 py-5 '>
               
-                <Product cartItems={userCart?.cartItems} item={item}/>
+                <Product cartItems={userCart?.cartItems} key={i} item={item}/>
             </div>)
         })
     }

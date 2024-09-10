@@ -1,3 +1,4 @@
+import { LOGOUT_SUCCESS } from "../Authentication/ActionType"
 import { ADD_ITEM_TO_CART_FAILURE, ADD_ITEM_TO_CART_REQUEST, ADD_ITEM_TO_CART_SUCCESS, CLEAR_CART_FAILURE, CLEAR_CART_REQUEST, CLEAR_CART_SUCCESS, DELETE_CART_ITEM_FAILURE, DELETE_CART_ITEM_REQUEST, DELETE_CART_ITEM_SUCCESS, GET_USER_CART_FAILURE, GET_USER_CART_REQUEST, GET_USER_CART_SUCCESS, UPDATE_CART_ITEM_FAILURE, UPDATE_CART_ITEM_REQUEST, UPDATE_CART_ITEM_SUCCESS } from "./ActionType"
 
 const initialState = {
@@ -21,6 +22,10 @@ export const userCartReducer = (state=initialState, action) =>{
         case CLEAR_CART_SUCCESS:
             return{
                 ...state, isLoading:false, error:null, cart:action.payload, cartItems:action.payload?.items
+            }
+        case LOGOUT_SUCCESS:
+            return{
+            ...initialState
             }
         case ADD_ITEM_TO_CART_SUCCESS:
            return{
