@@ -1,9 +1,18 @@
-import React, { useEffect } from 'react'
-import StoreOrderItem from './StoreOrderItem'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getStoreOrder } from '../../State/StoreOrder/Action'
+import OrderModal from './OrderModal'
 
 const StoreOrder = () => {
+
+  const [ items, setItems] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const openhandle = ({item}) =>{
+      console.log("items",item)
+      setItems({item});
+      setOpenModal(true);
+       console.log("items",items)
+  }
   const { storeOrder, store } = useSelector(store => store)
   const dispatch = useDispatch()
   const jwt = localStorage.getItem("jwt")
@@ -22,7 +31,10 @@ const StoreOrder = () => {
        
             Orders
       </div>
-       <table className=' table-auto w-full m-5 hidden lg:block bg-blue-100'>
+      <div className='overflow-x-auto'>
+
+      
+       <table className='table-auto w-full   m-5 hidden lg:block bg-blue-100'>
         <thead className='py-15 bg-white'>              
             <tr className=' text-xl md:text-2xl font-semibold text-gray-700 '>
               <th className='px-3 py-3'>id</th>
@@ -33,13 +45,14 @@ const StoreOrder = () => {
               <th className='px-3 py-3'>Total Price</th>
               <th className='px-3 py-3'>OrderStatus</th>
               <th className='px-3 py-3'>Delivary Address</th>
+              <th className='px-3 py-3'>UPDATE</th>
             </tr>
           </thead>
           <tbody>
             {
               storeOrder?.storeOrder?.map((item, i)=>{
                 return(
-              <tr key={i} className='item-center border-b-2 border-r-2 border-l-2 border-t-2 border-dotted border-black px-5 py-11 text-xl font-semibold text-gray-700' >
+              <tr key={i} className={`${i%2==0?'bg-blue-200':'bg-blue-100'} item-center border-b-2 border-r-2 border-l-2 border-t-2 border-dotted border-black px-5 py-11 text-xl font-semibold text-gray-700`} >
               <td className='px-3' >{i+1}</td>
               <td className='px-3'>{item?.createdAt.substring(0,10)}</td>
               <td className='px-3'>Customer</td>
@@ -62,12 +75,17 @@ const StoreOrder = () => {
                  <p>{item?.order?.deliveryAddress?.district}</p>
                 </button>
               </td>
+              <td >
+                <button className='bg-green-500 hover:bg-green-700 px-3 py-1 text-white font-semibold text-2xl rounded-lg'
+                onClick={()=>openhandle({item})}>UPDATE</button>
+              </td>
               </tr>
                 )
               })
             }
           </tbody>
        </table>
+       </div>
        <div className='grid grid-cols-1 md:grid-cols-2 gap-3 lg:hidden'>
         {
           storeOrder?.storeOrder?.map((item)=>{
@@ -109,6 +127,10 @@ const StoreOrder = () => {
                      <div className="">
                          <button className='text-white rounded-lg bg-pink-500 hover:bg-pink-600 px-3 py-1'>STATUS : {item?.orderStatus}</button> 
                      </div>
+                     <div className='mt-3'>
+                     <button className='bg-green-500 hover:bg-green-700 px-3 py-1 text-white font-semibold text-2xl rounded-lg'
+                onClick={()=>openhandle({item})}>UPDATE</button>
+                </div>
                   </div>
                   
                  </div>
@@ -118,6 +140,7 @@ const StoreOrder = () => {
         }
        </div>
     </div>
+    <OrderModal isVisible={openModal} onClose={()=>setOpenModal(false)} item={items}/>
     </>
   )
 }

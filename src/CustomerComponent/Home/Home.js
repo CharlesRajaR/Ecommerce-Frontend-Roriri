@@ -22,7 +22,7 @@ const Home = () => {
       <div className='bg-gradient-to-bl from-gray-500 to-blue-500 flex justify-center items-center w-full h-[70vh] relative bg-blue-100 '>
          <img src={img} alt="" className='absolute w-full h-full object-cover opacity-70 mix-blend-overlay'/>
          <div className='flex flex-col justify-center items-center'>
-            <div className="text-7xl font-bold  text-white">
+            <div className="text-3xl md:text-7xl font-bold  text-white">
               Shop Outside the Box
             </div>
             <div className="text-3xl font-bold text-white">
